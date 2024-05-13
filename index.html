@@ -3,19 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hotel Atou Boutique & SPA</title>
 </head>
 <body>
-    
-
-
-
-
-
-
-
-
-
+    <div id="mensaje"></div>
+    <form id="nombreForm" style="display: none;">
+        <label for="nombre">Nombre y Apellido:</label><br>
+        <input type="text" id="nombre" name="nombre"><br>
+        <button type="button" onclick="manejarNombre()">Siguiente</button>
+    </form>
+    <form id="mesForm" style="display: none;">
+        <label for="mes">Mes de Reserva:</label><br>
+        <input type="number" id="mes" name="mes" min="1" max="12"><br>
+        <button type="button" onclick="manejarMes()">Siguiente</button>
+    </form>
+    <form id="habitacionForm" style="display: none;">
+        <label for="habitacion">Tipo de Habitación:</label><br>
+        <select id="habitacion" name="habitacion">
+            <option value="Standar">Standar</option>
+            <option value="Deluxe">Deluxe</option>
+            <option value="Suite">Suite</option>
+        </select><br>
+        <button type="button" onclick="manejarHabitacion()">Siguiente</button>
+    </form>
+    <form id="desayunoForm" style="display: none;">
+        <label for="desayuno">Tipo de Desayuno:</label><br>
+        <select id="desayuno" name="desayuno">
+            <option value="continental">Continental</option>
+            <option value="americano">Americano</option>
+        </select><br>
+        <button type="button" onclick="manejarDesayuno()">Finalizar Reserva</button>
+    </form> 
     <script src="main.js"></script>
 </body>
 </html>

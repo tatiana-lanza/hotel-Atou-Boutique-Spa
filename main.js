@@ -1,47 +1,68 @@
-alert("Bienvenido al Hotel Atou Boutique & SPA");
-let nombre = prompt("Indique su nombre y apellido para iniciar una reserva");
-alert("Bienvenido " + nombre + ". A continuacion, coloque mes de reserva.");
-console.log("Nombre de la persona que reserva: " + nombre);
-
-let numero;
-do {
-    numero = parseInt(prompt("Utilice un solo digito para referirse al mes que desea reservar"));
-    console.log("Mes seleccionado: " + numero);
-} while (isNaN(numero) || numero < 5);
-if (numero >= 5) {
-    alert("Tenemos disponibilidad para este mes");
-} else {
-    alert("Lo sentimos, no disponemos de habitaciones para el mes seleccionado");
+let habitacionesDisponibles = ["Standar", "Deluxe", "Suite"];
+function Reserva(nombre, mes, habitacion, desayuno) {
+    this.nombre = nombre;
+    this.mes = mes;
+    this.habitacion = habitacion;
+    this.desayuno = desayuno;
 }
-
-let habitacionesDisponibles = ["Standar", "Deluxe", "Suite"]
-let habitacionElegida;
-let habitacionValida = false;
-while (!habitacionValida) {
-    habitacionElegida = prompt("Ingrese el tipo de habitacion que desea: Standar, Deluxe o Suite");
-    for (let i = 0; i < habitacionesDisponibles.length; i++) {
-        if (habitacionElegida.toLowerCase() === habitacionesDisponibles[i].toLowerCase()) {
-            habitacionValida = true;
-            break;
-        }
-    }
-    if (!habitacionValida) {
-        alert("La habitacion seleccionada no es valida. Por favor elija una opcion valida.");
+function validarMes(mes) {
+    return !isNaN(mes) && mes >= 5;
+}
+function validarHabitacion(habitacion) {
+    return habitacionesDisponibles.map(function (item) {
+        return item.toLowerCase();
+    }).includes(habitacion.toLowerCase());
+}
+function mostrarMensaje(mensaje) {
+    document.getElementById("mensaje").innerText = mensaje;
+}
+function iniciarReserva() {
+    mostrarMensaje("Bienvenido al Hotel Atou Boutique & SPA");
+    document.getElementById("nombreForm").style.display = "block";
+}
+function manejarNombre() {
+    let nombre = document.getElementById("nombre").value;
+    mostrarMensaje("Bienvenido " + nombre + ". A continuacion, coloque mes de reserva.");
+    console.log("Nombre de la persona que reserva: " + nombre);
+    document.getElementById("mesForm").style.display = "block";
+}
+function manejarMes() {
+    let mes = parseInt(document.getElementById("mes").value);
+    console.log("Mes seleccionado: " + mes);
+    if (validarMes(mes)) {
+        mostrarMensaje("Tenemos disponibilidad para este mes");
+        document.getElementById("habitacionForm").style.display = "block";
+    } else {
+        mostrarMensaje("Lo sentimos, no disponemos de habitaciones para el mes seleccionado");
     }
 }
-alert("La habitacion seleccionada es: " + habitacionElegida)
-console.log("Habitacion seleccionada:" + habitacionElegida)
-
-let desayunos = ["continental", "americano"];
-let desayunoElegido;
-do {
-    desayunoElegido = prompt("Para el desayuno elija entre: Continental o Americano").toLowerCase();
-    if (!desayunos.includes(desayunoElegido)) {
-        alert("La opcion de desayuno elegida no es valida. Por favor, elija entre Continental o Americano");
+function manejarHabitacion() {
+    let habitacion = document.getElementById("habitacion").value;
+    if (validarHabitacion(habitacion)) {
+        mostrarMensaje("La habitacion seleccionada es: " + habitacion);
+        document.getElementById("desayunoForm").style.display = "block";
+    } else {
+        mostrarMensaje("La habitacion seleccionada no es valida. Por favor elija una opcion valida.");
     }
-} while (!desayunos.includes(desayunoElegido));
-alert("Ha seleccionado el desayuno " + desayunoElegido + ". Su reserva ha finalizado con exito.");
-console.log("Desayuno seleccionado:" + desayunoElegido);
+}
+function manejarDesayuno() {
+    let desayuno = document.getElementById("desayuno").value.toLowerCase();
+    if (desayunos.includes(desayuno)) {
+        mostrarMensaje("Ha seleccionado el desayuno " + desayuno + ". Su reserva ha finalizado con exito.");
+        console.log("Desayuno seleccionado:" + desayuno);
+        guardarReserva();
+    } else {
+        mostrarMensaje("La opcion de desayuno elegida no es valida. Por favor, elija entre Continental o Americano");
+    }
+}
+function guardarReserva() {
+    let reserva = new Reserva(document.getElementById("nombre").value, parseInt(document.getElementById("mes").value), document.getElementById("habitacion").value, document.getElementById("desayuno").value);
+    localStorage.setItem("reserva", JSON.stringify(reserva));
+}
+window.onload = function () {
+    iniciarReserva();
+};
+
 
 
 
